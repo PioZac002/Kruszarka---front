@@ -1,57 +1,46 @@
 // App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
-import DashboardPage from './pages/DashboardPage';
-import IntegratorsPage from './pages/IntegratorsPage';
-import IntegratorGroupsPage from './pages/IntegratorsGroupsPage';
-import UserProfilePage from './pages/UserProfilePage';
-import Navbar from './components/Navbar';
+import Dashboard from './components/Dashboard/Dashboard';
+import Login from './components/Login/Login';
+import Register from './components/Register/Register';
+import './App.scss';
 
-const App = () => {
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: (
+      <div>
+        <Login />
+      </div>
+    ),
+  },
+  {
+    path: '/dashboard',
+    element: (
+      <div>
+        <Dashboard />
+      </div>
+    ),
+  },
+  {
+    path: '/register',
+    element: (
+      <div>
+        <Register />
+      </div>
+    ),
+  },
+]);
+
+function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<LoginPage />} />
-        <Route
-          path='/dashboard'
-          element={
-            <>
-              <Navbar />
-              <DashboardPage />
-            </>
-          }
-        />
-        <Route
-          path='/integrators'
-          element={
-            <>
-              <Navbar />
-              <IntegratorsPage />
-            </>
-          }
-        />
-        <Route
-          path='/integrator-groups'
-          element={
-            <>
-              <Navbar />
-              <IntegratorGroupsPage />
-            </>
-          }
-        />
-        <Route
-          path='/profile'
-          element={
-            <>
-              <Navbar />
-              <UserProfilePage />
-            </>
-          }
-        />
-      </Routes>
-    </Router>
+    <div>
+      <RouterProvider router={router} />
+    </div>
   );
-};
+}
 
 export default App;
