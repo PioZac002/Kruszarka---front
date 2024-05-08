@@ -1,7 +1,6 @@
-import React from 'react';
-// import './Register.css';
-// // import '../../App.css';
-import '../Register/Register.css';
+import React, { useState } from 'react';
+import './Register.css';
+import '../../App.css';
 import { Link, NavLink } from 'react-router-dom';
 
 //imports of assets
@@ -15,6 +14,10 @@ import { BsFillShieldLockFill } from 'react-icons/bs';
 import { MdEmail } from 'react-icons/md';
 
 const Register = () => {
+  //Use state to hold our inputs
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
     <div className='registerPage flex'>
       <div className='container flex'>
