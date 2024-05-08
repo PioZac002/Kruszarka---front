@@ -1,6 +1,6 @@
 import React from 'react';
 import './Login.css';
-import '../../App.css';
+// import '../../App.css';
 import { Link, NavLink } from 'react-router-dom';
 
 //imports of assets
@@ -63,6 +63,7 @@ const Login = () => {
               <span>Login</span>
               <AiOutlineSwapRight className='icon' />
             </button>
+            <a href='/dashboard'>Dashboard</a>
             <span className='forgotPassword'>
               Forgot your password? <a href=''>Click here</a>
             </span>

@@ -1,6 +1,7 @@
 import React from 'react';
-import './Register.css';
-import '../../App.css';
+// import './Register.css';
+// // import '../../App.css';
+import '../Register/Register.css';
 import { Link, NavLink } from 'react-router-dom';
 
 //imports of assets

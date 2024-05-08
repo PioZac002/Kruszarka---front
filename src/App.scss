@@ -65,13 +65,7 @@ video {
   border-radius: 3px;
   text-align: center;
 }
-.showMessage {
-  display: block;
-  color: var(--whiteColor);
-  background: rgb(255, 0, 0);
-  border-radius: 3px;
-  text-align: center;
-}
+
 .btn {
   border: none;
   outline: none;
@@ -103,7 +97,7 @@ video {
     margin: auto;
     justify-content: space-between;
     border-radius: 10px;
-    background: hsl(0, 0, 91%);
+    background: hsl(0, 20%, 51%);
     .videoDiv {
       position: relative;
       display: flex;
@@ -258,3 +252,4 @@ video {
     }
   }
 }
+//
