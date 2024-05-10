@@ -18,6 +18,11 @@
   --smallFontSize: 0.813rem;
   --smallestFontSize: 0.75rem;
 }
+.grid {
+  display: grid;
+  align-items: center;
+  gap: 1.5rem;
+}
 .sideBar {
   background: var(--whiteColor);
   box-shadow: 1px 0px 4px var(--greyText);
@@ -36,6 +41,113 @@
       background: var(--inputColor);
       border-radius: 2px;
       padding: 0.2rem;
+    }
+    h2 {
+      font-size: var(--h2FontSize);
+      color: var(--PrimaryColor);
+    }
+  }
+  .menuDiv,
+  .settingsDiv {
+    .divTitle {
+      font-size: var(--h3FontSize);
+      color: var(--blackColor);
+      padding: 0 1.5rem 1.5rem;
+    }
+    .menuLists {
+      .listItem {
+        padding: 0.2rem 1.5rem;
+        width: 100%;
+        position: relative;
+
+        &::before {
+          position: absolute;
+          content: ' ';
+          height: 0%;
+          width: 5px;
+          bottom: 0;
+          border-top-right-radius: 10px;
+          border-bottom-right-radius: 10px;
+          background: var(--PrimaryColor);
+        }
+        .menuLink {
+          color: var(--greyText);
+          font-weight: 500;
+          transition: 0;
+          .icon {
+            margin-right: 0.5rem;
+          }
+        }
+        &:hover .menuLink {
+          color: var(--PrimaryColor);
+          transition: 0;
+        }
+        &:hover::before {
+          height: 100%;
+          transition: 0.3s ease;
+        }
+      }
+    }
+  }
+  .sideBarCard {
+    width: 100%;
+    padding: 0 1rem;
+    text-align: center;
+    position: relative;
+    .icon {
+      position: absolute;
+      background: var(--HoverColor);
+      border: 10px solid var(--whiteColor);
+      font-size: 3rem;
+      border-radius: 50%;
+      top: -30px;
+      right: 50%;
+      transform: translate(50%);
+      z-index: 100;
+    }
+    .cardContent {
+      position: relative;
+      padding: 1rem;
+      background: var(--HoverColor);
+      border-radius: 10px;
+      overflow: hidden;
+      h3 {
+        font-size: var(--h3FontSize);
+        margin-top: 1rem;
+        padding: 1rem 0;
+        font-weight: 800;
+        color: var(--blackColor);
+      }
+      p {
+        font-size: var(--normalFontSize);
+        color: var(--textColor);
+        padding-bottom: 1rem;
+        font-weight: 500;
+      }
+      .btn {
+        position: relative;
+        color: var(--textColor);
+        z-index: 1000;
+      }
+      .circle1,
+      .circle2 {
+        position: absolute;
+        background: var(--paleGreen);
+        border-radius: 50%;
+        opacity: 0.7;
+      }
+      .circle1 {
+        height: 100px;
+        width: 100px;
+        top: -50px;
+        left: -50px;
+      }
+      .circle2 {
+        height: 150px;
+        width: 150px;
+        bottom: -80px;
+        right: -70px;
+      }
     }
   }
 }

@@ -9,22 +9,23 @@ import { MdOutlineAssignmentInd } from 'react-icons/md';
 import { PiLineSegmentsBold } from 'react-icons/pi';
 import { FaUserPlus } from 'react-icons/fa';
 import { TbPrismPlus } from 'react-icons/tb';
+import { FaRegQuestionCircle } from 'react-icons/fa';
 
 const Sidebar = () => {
   return (
     <div className='sideBar grid'>
       <div className='logoDiv flex'>
         <img src={logo} alt='Image Name' className='logo' />
-        <h2>KruszApp</h2>
+        <h2>CrushApp</h2>
       </div>
 
       <div className='menuDiv'>
         <h3 className='divTitle'>QUICK MENU</h3>
-        <ul className='menuList grid'>
+        <ul className='menuLists grid'>
           <li className='listItem'>
             <a className='menuLink flex' href='#'>
               <IoMdSpeedometer className='icon' />
-              <span className='smallText'>Dash board</span>
+              <span className='smallText'>Dashboard</span>
             </a>
           </li>
 
@@ -53,7 +54,7 @@ const Sidebar = () => {
 
       <div className='settingsDiv'>
         <h3 className='divTitle'>SETTINGS</h3>
-        <ul className='menuList grid'>
+        <ul className='menuLists grid'>
           <li className='listItem'>
             <a className='menuLink flex' href='#'>
               <FaUserPlus className='icon' />
@@ -82,6 +83,16 @@ const Sidebar = () => {
             </a>
           </li>
         </ul>
+      </div>
+      <div className='sideBarCard'>
+        <FaRegQuestionCircle className='icon' />
+        <div className='cardContent'>
+          <div className='circle1'></div>
+          <div className='circle2'></div>
+          <h3>Help Center</h3>
+          <p>Having problems? Contact us here:</p>
+          <button className='btn'>Go to help center</button>
+        </div>
       </div>
     </div>
   );

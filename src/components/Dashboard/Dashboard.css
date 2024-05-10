@@ -4,6 +4,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
+  transition: 0.3 ease;
 }
 
 :root {
@@ -53,7 +54,6 @@ li {
 
 .icon {
   font-size: var(--h2FontSize);
-  cursor: pointer;
 }
 
 img,
@@ -102,7 +102,7 @@ body {
 
 .container {
   position: relative;
-  width: 95vh;
+  width: 95vw;
   height: 95vh;
   display: flex;
   align-items: center;
