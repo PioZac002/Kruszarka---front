@@ -9,3 +9,10 @@
     align-items: flex-start;
   }
 }
+
+//media queries
+@media screen and (max-width: 918px) {
+  .bottom {
+    flex-direction: column;
+  }
+}

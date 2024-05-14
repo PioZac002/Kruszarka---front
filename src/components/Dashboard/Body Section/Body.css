@@ -10,4 +10,10 @@
   align-items: flex-start;
 }
 
+@media screen and (max-width: 918px) {
+  .bottom {
+    flex-direction: column;
+  }
+}
+
 /*# sourceMappingURL=Body.css.map */

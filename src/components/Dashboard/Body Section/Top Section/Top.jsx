@@ -15,11 +15,7 @@ const Top = () => {
       <div className='headerSection flex'>
         <div className='title'>
           <h1>Welcome</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Consequatur, ipsam veritatis? Fugit eligendi distinctio reiciendis
-            dolorum ratione consequuntur id doloremque?
-          </p>
+          <p>Program do zarządzania kruszarkami ez</p>
         </div>
         <div className='searchBar flex'>
           <input type='text' placeholder='Search Dashboard' />
@@ -56,11 +52,11 @@ const Top = () => {
               <h1>Moje kruszarki</h1>
               <div className='flex'>
                 <span>
-                  Przypisane:
+                  Dodane:
                   <br /> <small>4 kruszarki</small>
                 </span>
                 <span>
-                  Przypisane:
+                  Dodane:
                   <br /> <small>4 kruszarki</small>
                 </span>
               </div>
@@ -73,8 +69,7 @@ const Top = () => {
             <div className='imgDiv'>
               <img src={toolsImage} alt='BackGround Image' />
             </div>
-            {/* moze potem sie przyda  */}
-            {/* <div className='sideBarCard'>
+            <div className='sideBarCard'>
               <FaRegQuestionCircle className='icon' />
               <div className='cardContent'>
                 <div className='circle1'></div>
@@ -83,7 +78,7 @@ const Top = () => {
                 <p>Having problems? Contact us here:</p>
                 <button className='btn'>Go to help center</button>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
