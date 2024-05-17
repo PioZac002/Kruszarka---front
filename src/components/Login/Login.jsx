@@ -1,18 +1,79 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 import '../../App.css';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { endpoints } from '../../api'; // Importuj named exports
 
-//imports of assets
+// imports of assets
 import backImg from '../../assets/backgroundaaa.png';
 import logo from '../../assets/logoKruszarka.png';
 import videoLogin from '../../assets/videoLogin.mp4';
-//imprted Icons
+// imported Icons
 import { FaUserShield } from 'react-icons/fa';
 import { AiOutlineSwapRight } from 'react-icons/ai';
 import { BsFillShieldLockFill } from 'react-icons/bs';
 
 const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+    try {
+      const response = await fetch(endpoints.login, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await response.json();
+
+      if (data.challengeName === 'NEW_PASSWORD_REQUIRED') {
+        const { USER_ID_FOR_SRP } = data.challengeParameters;
+        const { session } = data;
+        // Przekierowanie na stronę zmiany hasła z przekazaniem odpowiednich parametrów
+        navigate(`/register?username=${USER_ID_FOR_SRP}&session=${session}`);
+      } else {
+        const { access_token, id_token, userID } = data;
+        // Zapisz tokeny i ID użytkownika w lokalnym storage lub kontekście aplikacji
+        localStorage.setItem('access_token', access_token);
+        localStorage.setItem('id_token', id_token);
+        localStorage.setItem('userID', userID);
+
+        // Fetch user data
+        const fetchUserResponse = await fetch(
+          endpoints.getUser(userID, userID),
+          {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${id_token}`,
+            },
+          }
+        );
+
+        if (!fetchUserResponse.ok) {
+          throw new Error('Failed to fetch user data');
+        }
+
+        const userData = await fetchUserResponse.json();
+        console.log('User data:', userData);
+
+        // Save user role in localStorage
+        const { isManager, isService } = userData.user.role;
+        localStorage.setItem('role', JSON.stringify({ isManager, isService }));
+
+        // Przekierowanie do głównej strony aplikacji
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      setError('Login failed. Please check your credentials and try again.');
+    }
+  };
+
   return (
     <div className='loginPage flex'>
       <div className='container flex'>
@@ -38,13 +99,19 @@ const Login = () => {
             <h3>Welcome Back!</h3>
           </div>
 
-          <form action='' className='form grid'>
-            <span className='showMessage'>Login status will go here</span>
+          <form className='form grid' onSubmit={handleSubmit}>
+            {error && <span className='showMessage'>{error}</span>}
             <div className='inputDiv'>
               <label htmlFor='username'>Username</label>
               <div className='input flex'>
                 <FaUserShield className='icon' />
-                <input type='text' id='username' placeholder='Enter username' />
+                <input
+                  type='text'
+                  id='username'
+                  placeholder='Enter username'
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
               </div>
             </div>
             <div className='inputDiv'>
@@ -55,6 +122,8 @@ const Login = () => {
                   type='password'
                   id='password'
                   placeholder='Enter password'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>
@@ -63,7 +132,6 @@ const Login = () => {
               <span>Login</span>
               <AiOutlineSwapRight className='icon' />
             </button>
-            <a href='/dashboard'>Dashboiard</a>
             <span className='forgotPassword'>
               Forgot your password? <a href=''>Click here</a>
             </span>
@@ -73,4 +141,5 @@ const Login = () => {
     </div>
   );
 };
+
 export default Login;

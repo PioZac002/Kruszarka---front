@@ -1,37 +1,33 @@
 // App.jsx
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Dashboard from './components/Dashboard/Dashboard';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
+import ManageIntegrators from './components/ManageIntegrators/ManageIntegrators';
+import ManageWorkers from './components/ManageWorkers/ManageWorkers';
 import './App.scss';
-
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <div>
-        <Login />
-      </div>
-    ),
+    element: <Login />,
   },
   {
     path: '/dashboard',
-    element: (
-      <div>
-        <Dashboard />
-      </div>
-    ),
+    element: <Dashboard />,
   },
   {
     path: '/register',
-    element: (
-      <div>
-        <Register />
-      </div>
-    ),
+    element: <Register />,
+  },
+  {
+    path: '/manage-integrators',
+    element: <ManageIntegrators />,
+  },
+  {
+    path: '/manage-workers',
+    element: <ManageWorkers />,
   },
 ]);
 

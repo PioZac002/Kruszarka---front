@@ -1,0 +1,129 @@
+:root {
+  --PrimaryColor: hsl(94, 59%, 35%);
+  --HoverColor: #bdf094;
+  --paleGreen: hsl(96, 75%, 89%);
+  --whiteColor: hsl(0, 0%, 100%);
+  --blackColor: hsl(0, 0%, 18%);
+  --textColor: hsl(240, 1%, 48%);
+  --greyText: rgb(190, 190, 190);
+  --bgColor: hsl(220, 10%, 94%);
+  --inputColor: hsl(330, 12%, 97%);
+  --itemCardColor: hsl(120, 5%, 88%);
+  --itemCardHover: hsl(120, 27%, 87%);
+  --biggestFontSize: 2.5rem;
+  --h1FontSize: 1.5rem;
+  --h2FontSize: 1.25rem;
+  --h3FontSize: 1rem;
+  --normalFontSize: 0.938rem;
+  --smallFontSize: 0.813rem;
+  --smallestFontSize: 0.75rem;
+}
+
+.manageIntegratorsContainer {
+  display: flex;
+  min-height: 100vh;
+}
+.manageIntegratorsContainer .sidebar {
+  flex: 0 0 250px;
+  height: 100vh;
+  background: var(--PrimaryColor);
+}
+.manageIntegratorsContainer .manageSection {
+  flex: 1;
+  padding: 20px;
+  background: var(--bgColor);
+  overflow-y: auto;
+}
+.manageIntegratorsContainer .manageSection .header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.manageIntegratorsContainer .manageSection .header h1 {
+  margin: 0 0 10px 0;
+}
+.manageIntegratorsContainer .manageSection .header p {
+  margin: 0 0 20px 0;
+}
+.manageIntegratorsContainer .manageSection .header form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.manageIntegratorsContainer .manageSection .header form input,
+.manageIntegratorsContainer .manageSection .header form select {
+  padding: 10px;
+  border: 1px solid var(--inputColor);
+  border-radius: 4px;
+  font-size: var(--normalFontSize);
+}
+.manageIntegratorsContainer .manageSection .header form input:focus,
+.manageIntegratorsContainer .manageSection .header form select:focus {
+  outline: none;
+  border-color: var(--PrimaryColor);
+}
+.manageIntegratorsContainer .manageSection .header form .btn {
+  padding: 10px 20px;
+  background: var(--PrimaryColor);
+  color: var(--whiteColor);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.manageIntegratorsContainer .manageSection .header form .btn:hover {
+  background: var(--HoverColor);
+}
+.manageIntegratorsContainer .manageSection .secContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.manageIntegratorsContainer .manageSection .secContainer .singleItem {
+  background: var(--whiteColor);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.manageIntegratorsContainer .manageSection .secContainer .singleItem h4 {
+  margin: 0;
+}
+.manageIntegratorsContainer .manageSection .secContainer .singleItem p {
+  margin: 0;
+}
+.manageIntegratorsContainer .manageSection .secContainer .singleItem .btn {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background: var(--PrimaryColor);
+  color: var(--whiteColor);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.manageIntegratorsContainer .manageSection .secContainer .singleItem .btn:hover {
+  background: var(--HoverColor);
+}
+
+@media screen and (max-width: 1200px) {
+  .manageIntegratorsContainer {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+  }
+}
+@media screen and (max-width: 768px) {
+  .manageIntegratorsContainer {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/*# sourceMappingURL=ManageIntegrators.css.map */
