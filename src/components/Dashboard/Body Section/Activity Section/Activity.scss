@@ -21,6 +21,25 @@
   --smallestFontSize: 0.75rem;
 }
 .activitySection {
+  .managerSelect {
+    margin-bottom: 1rem;
+    label {
+      margin-right: 0.5rem;
+      font-size: var(--normalFontSize);
+      color: var(--textColor);
+    }
+    select {
+      padding: 0.5rem;
+      font-size: var(--normalFontSize);
+      border: 1px solid var(--inputColor);
+      border-radius: 4px;
+      &:focus {
+        outline: none;
+        border-color: var(--PrimaryColor);
+      }
+    }
+  }
+
   flex-basis: 50%;
   .heading {
     width: 100%;

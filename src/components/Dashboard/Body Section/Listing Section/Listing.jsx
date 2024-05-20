@@ -5,14 +5,16 @@ import './Listing.css';
 import { HiOutlineArrowLongRight } from 'react-icons/hi2';
 // imported images
 import crusherImage from '../../../../assets/kruszarkalol.png';
-import userImage from '../../../../assets/guyImage.png';
 import { endpoints } from '../../../../api'; // Importuj named exports
 
 const Listing = () => {
   const [workers, setWorkers] = useState([]);
   const [integrators, setIntegrators] = useState([]);
+  const [selectedManager, setSelectedManager] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  const role = JSON.parse(localStorage.getItem('role'));
 
   useEffect(() => {
     const fetchWorkers = async () => {
@@ -20,7 +22,8 @@ const Listing = () => {
         const userID = localStorage.getItem('userID');
         const token = localStorage.getItem('id_token');
 
-        const response = await fetch(endpoints.getWorkers(userID), {
+        let url = endpoints.getWorkers(userID);
+        const response = await fetch(url, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -43,13 +46,11 @@ const Listing = () => {
       try {
         const userID = localStorage.getItem('userID');
         const token = localStorage.getItem('id_token');
-        const role = localStorage.getItem('role'); // Pobierz rolę użytkownika z localStorage
-        const managerID = localStorage.getItem('managerID'); // Pobierz managerID jeśli istnieje
 
-        const url =
-          role === 'serviceman' && managerID
-            ? endpoints.getIntegrators(userID, managerID)
-            : endpoints.getIntegrators(userID);
+        let url = endpoints.getIntegrators(userID);
+        if (role.isManager) {
+          url += `?createdFor=${userID}`;
+        }
 
         const response = await fetch(url, {
           method: 'GET',
@@ -72,7 +73,45 @@ const Listing = () => {
 
     fetchWorkers();
     fetchIntegrators();
-  }, []);
+  }, [role.isManager]);
+
+  const fetchIntegratorsForManager = async (managerID) => {
+    try {
+      const userID = localStorage.getItem('userID');
+      const token = localStorage.getItem('id_token');
+
+      let url = endpoints.getIntegrators(userID);
+      if (role.isService) {
+        url += `?createdFor=${managerID}`;
+      }
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch integrators');
+      }
+
+      const data = await response.json();
+      console.log('Integrators data:', data.integrators);
+      setIntegrators(data.integrators);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleManagerChange = (e) => {
+    setSelectedManager(e.target.value);
+    if (e.target.value) {
+      fetchIntegratorsForManager(e.target.value);
+    } else {
+      setIntegrators([]);
+    }
+  };
 
   const getAttribute = (attributes = [], name) => {
     const attribute = attributes.find((attr) => attr.Name === name);
@@ -92,6 +131,28 @@ const Listing = () => {
           Zarządzaj <HiOutlineArrowLongRight className='icon' />
         </button>
       </div>
+
+      {role.isService && (
+        <div className='managerSelect'>
+          <label htmlFor='manager'>Wybierz managera: </label>
+          <select
+            id='manager'
+            value={selectedManager}
+            onChange={handleManagerChange}
+          >
+            <option value=''>Wybierz...</option>
+            {workers
+              .filter((worker) => worker.role.isManager)
+              .map((manager) => (
+                <option key={manager.PK} value={manager.PK}>
+                  {getAttribute(manager.cognitoAttributes, 'given_name')}{' '}
+                  {getAttribute(manager.cognitoAttributes, 'family_name')}
+                </option>
+              ))}
+          </select>
+        </div>
+      )}
+
       <div className='secContainer flex'>
         {Array.isArray(integrators) && integrators.length > 0 ? (
           integrators.map((integrator, index) => (

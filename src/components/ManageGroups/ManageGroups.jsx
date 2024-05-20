@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import './ManageIntegrators.scss';
+import './ManageGroups.scss';
 import Sidebar from '../Dashboard/SideBar Section/Sidebar';
 import { endpoints } from '../../api';
 
-const ManageIntegrators = () => {
-  const [integrators, setIntegrators] = useState([]);
+const ManageGroups = () => {
+  const [groups, setGroups] = useState([]);
   const [managers, setManagers] = useState([]);
-  const [newIntegrator, setNewIntegrator] = useState({
-    location: '',
-    serialNumber: '',
+  const [newGroup, setNewGroup] = useState({
+    integratorGroupName: '',
     userID: '',
   });
-  const [selectedManager, setSelectedManager] = useState('');
   const [filter, setFilter] = useState('all');
+  const [selectedManager, setSelectedManager] = useState('');
   const [error, setError] = useState(null);
   const [role, setRole] = useState({ isManager: false, isService: false });
 
@@ -20,36 +19,6 @@ const ManageIntegrators = () => {
     const fetchRole = () => {
       const role = JSON.parse(localStorage.getItem('role'));
       setRole(role);
-    };
-
-    const fetchIntegrators = async () => {
-      try {
-        const userID = localStorage.getItem('userID');
-        const token = localStorage.getItem('id_token');
-
-        let url = endpoints.getIntegrators(userID);
-        if (role.isManager) {
-          url += `?createdFor=${userID}`;
-        } else if (role.isService && selectedManager) {
-          url += `?createdFor=${selectedManager}`;
-        }
-
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch integrators');
-        }
-
-        const data = await response.json();
-        setIntegrators(Array.isArray(data.integrators) ? data.integrators : []);
-      } catch (err) {
-        setError(err.message);
-      }
     };
 
     const fetchManagers = async () => {
@@ -79,13 +48,50 @@ const ManageIntegrators = () => {
     if (role.isService) {
       fetchManagers();
     }
-    fetchIntegrators();
-  }, [role.isService, selectedManager]);
+  }, []);
+
+  useEffect(() => {
+    if (role.isManager) {
+      fetchGroups();
+    }
+  }, [role.isManager]);
+
+  const fetchGroups = async (managerID = '') => {
+    try {
+      const userID = localStorage.getItem('userID');
+      const token = localStorage.getItem('id_token');
+
+      let url = endpoints.getIntegratorGroups(userID);
+      if (role.isService && managerID) {
+        url += `?groupsFor=${managerID}`;
+      } else if (role.isManager) {
+        url += `?groupsFor=${userID}`;
+      }
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch groups');
+      }
+
+      const data = await response.json();
+      setGroups(
+        Array.isArray(data.integratorGroups) ? data.integratorGroups : []
+      );
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewIntegrator((prevIntegrator) => ({
-      ...prevIntegrator,
+    setNewGroup((prevGroup) => ({
+      ...prevGroup,
       [name]: value,
     }));
   };
@@ -98,13 +104,16 @@ const ManageIntegrators = () => {
       const userID = localStorage.getItem('userID');
       const token = localStorage.getItem('id_token');
 
-      const payload = {
-        userID: role.isService ? newIntegrator.userID : userID,
-        location: newIntegrator.location,
-        serialNumber: newIntegrator.serialNumber,
-      };
+      const payload = role.isService
+        ? {
+            userID: newGroup.userID,
+            integratorGroupName: newGroup.integratorGroupName,
+          }
+        : {
+            integratorGroupName: newGroup.integratorGroupName,
+          };
 
-      const response = await fetch(endpoints.addIntegrator(userID), {
+      const response = await fetch(endpoints.addGroup(userID), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -114,14 +123,13 @@ const ManageIntegrators = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create integrator');
+        throw new Error('Failed to create group');
       }
 
       const data = await response.json();
-      setIntegrators((prevIntegrators) => [...prevIntegrators, data]);
-      setNewIntegrator({
-        location: '',
-        serialNumber: '',
+      setGroups((prevGroups) => [...prevGroups, data]);
+      setNewGroup({
+        integratorGroupName: '',
         userID: '',
       });
     } catch (err) {
@@ -129,20 +137,20 @@ const ManageIntegrators = () => {
     }
   };
 
-  const handleDelete = async (integratorID) => {
+  const handleDelete = async (groupID) => {
     try {
       const userID = localStorage.getItem('userID');
       const token = localStorage.getItem('id_token');
 
       const payload = {
-        userID: selectedManager,
+        userID: role.isService ? selectedManager : userID,
         editData: {
           isDeleted: true,
-          PK: integratorID,
+          PK: groupID,
         },
       };
 
-      const response = await fetch(endpoints.editIntegrator(userID), {
+      const response = await fetch(endpoints.editGroup(userID), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -152,15 +160,12 @@ const ManageIntegrators = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to delete integrator');
+        throw new Error('Failed to delete group');
       }
 
-      const updatedIntegrator = await response.json();
-      setIntegrators((prevIntegrators) =>
-        prevIntegrators.map((integrator) =>
-          integrator.PK === integratorID
-            ? { ...integrator, ...updatedIntegrator }
-            : integrator
+      setGroups((prevGroups) =>
+        prevGroups.map((group) =>
+          group.PK === groupID ? { ...group, isDeleted: true } : group
         )
       );
     } catch (err) {
@@ -175,63 +180,32 @@ const ManageIntegrators = () => {
   const handleManagerChange = (e) => {
     setSelectedManager(e.target.value);
     if (e.target.value) {
-      fetchIntegrators(e.target.value);
+      fetchGroups(e.target.value);
+    } else {
+      setGroups([]);
     }
   };
 
-  const filteredIntegrators = integrators.filter((integrator) => {
-    if (filter === 'active') return !integrator.isDeleted;
-    if (filter === 'deleted') return integrator.isDeleted;
+  const filteredGroups = groups.filter((group) => {
+    if (filter === 'active') return !group.isDeleted;
+    if (filter === 'deleted') return group.isDeleted;
     return true;
   });
 
-  const getAttribute = (attributes = [], name) => {
-    const attribute = attributes.find((attr) => attr.Name === name);
-    return attribute ? attribute.Value : 'N/A';
-  };
-
   return (
-    <div className='manageIntegratorsContainer'>
+    <div className='manageGroupsContainer'>
       <Sidebar className='sidebar' />
       <div className='manageSection'>
         <div className='header'>
-          <h1>Zarządzaj integratorami</h1>
-          <p>Dodawanie i usuwanie integratorów</p>
-          {role.isService && (
-            <div className='managerSelect'>
-              <label htmlFor='manager'>Wybierz managera: </label>
-              <select
-                id='manager'
-                value={selectedManager}
-                onChange={handleManagerChange}
-              >
-                <option value=''>Wybierz...</option>
-                {managers.map((manager) => (
-                  <option key={manager.PK} value={manager.PK}>
-                    {getAttribute(manager.cognitoAttributes, 'given_name')}{' '}
-                    {getAttribute(manager.cognitoAttributes, 'family_name')}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
+          <h1>Zarządzaj grupami</h1>
+          <p>Dodawanie i usuwanie grup</p>
           <form onSubmit={handleSubmit}>
             <div>
-              <label>Lokacja:</label>
+              <label>Nazwa grupy:</label>
               <input
                 type='text'
-                name='location'
-                value={newIntegrator.location}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div>
-              <label>Numer Seryjny:</label>
-              <input
-                type='text'
-                name='serialNumber'
-                value={newIntegrator.serialNumber}
+                name='integratorGroupName'
+                value={newGroup.integratorGroupName}
                 onChange={handleChange}
                 required
               />
@@ -241,7 +215,7 @@ const ManageIntegrators = () => {
                 <label>Manager:</label>
                 <select
                   name='userID'
-                  value={newIntegrator.userID}
+                  value={newGroup.userID}
                   onChange={handleChange}
                   required
                 >
@@ -256,7 +230,7 @@ const ManageIntegrators = () => {
               </div>
             )}
             <button type='submit' className='btn'>
-              Dodaj integrator
+              Dodaj grupę
             </button>
           </form>
           <div className='filterContainer'>
@@ -268,18 +242,32 @@ const ManageIntegrators = () => {
             </select>
           </div>
         </div>
+        {role.isService && (
+          <div className='managerSelect'>
+            <label htmlFor='manager'>Wybierz managera: </label>
+            <select
+              id='manager'
+              value={selectedManager}
+              onChange={handleManagerChange}
+            >
+              <option value=''>Wybierz...</option>
+              {managers.map((manager) => (
+                <option key={manager.PK} value={manager.PK}>
+                  {getAttribute(manager.cognitoAttributes, 'given_name')}{' '}
+                  {getAttribute(manager.cognitoAttributes, 'family_name')}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
         <div className='secContainer'>
-          {filteredIntegrators.map((integrator, index) => (
+          {filteredGroups.map((group, index) => (
             <div key={index} className='singleItem'>
-              <h4>Lokacja: {integrator.location}</h4>
-              <p>Numer seryjny: {integrator.serialNumber}</p>
-              {integrator.isDeleted && <p>Status: Usunięty</p>}
-              {!integrator.isDeleted && (
-                <button
-                  onClick={() => handleDelete(integrator.PK)}
-                  className='btn'
-                >
-                  Usuń integrator
+              <h4>Nazwa grupy: {group.integratorGroupName}</h4>
+              {group.isDeleted && <p>Status: Usunięty</p>}
+              {!group.isDeleted && (
+                <button onClick={() => handleDelete(group.PK)} className='btn'>
+                  Usuń grupę
                 </button>
               )}
             </div>
@@ -290,7 +278,7 @@ const ManageIntegrators = () => {
   );
 };
 
-export default ManageIntegrators;
+export default ManageGroups;
 
 function getAttribute(attributes, name) {
   if (!Array.isArray(attributes)) {

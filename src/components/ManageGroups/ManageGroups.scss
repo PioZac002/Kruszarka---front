@@ -21,7 +21,7 @@
   --smallestFontSize: 0.75rem;
 }
 
-.manageWorkersContainer {
+.manageGroupsContainer {
   display: flex;
   flex-wrap: wrap;
   height: 100vh;
@@ -154,7 +154,7 @@
 }
 
 @media screen and (max-width: 918px) {
-  .manageWorkersContainer {
+  .manageGroupsContainer {
     flex-direction: row;
   }
 }

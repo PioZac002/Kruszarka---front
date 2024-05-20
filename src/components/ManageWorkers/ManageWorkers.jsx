@@ -16,6 +16,7 @@ const ManageWorkers = () => {
     },
     manager: '',
   });
+  const [filter, setFilter] = useState('all');
   const [error, setError] = useState(null);
   const [role, setRole] = useState({ isManager: false, isService: false });
 
@@ -68,7 +69,11 @@ const ManageWorkers = () => {
       role: {
         ...prevWorker.role,
         [name]: checked,
+        ...(name === 'isService' && checked ? { isManager: false } : {}),
+        ...(name === 'isManager' && checked ? { isService: false } : {}),
       },
+      manager:
+        name === 'isManager' || name === 'isService' ? '' : prevWorker.manager,
     }));
   };
 
@@ -88,8 +93,12 @@ const ManageWorkers = () => {
           { Name: 'given_name', Value: newWorker.given_name },
           { Name: 'family_name', Value: newWorker.family_name },
         ],
-        role: isService ? newWorker.role : undefined,
-        manager: !isService ? userID : newWorker.manager,
+        role: newWorker.role,
+        manager: role.isManager
+          ? userID
+          : !newWorker.role.isService && !newWorker.role.isManager
+          ? newWorker.manager
+          : undefined,
       };
 
       const response = await fetch(endpoints.register(userID), {
@@ -148,12 +157,24 @@ const ManageWorkers = () => {
       }
 
       setWorkers((prevWorkers) =>
-        prevWorkers.filter((worker) => worker.PK !== workerID)
+        prevWorkers.map((worker) =>
+          worker.PK === workerID ? { ...worker, isDeleted: true } : worker
+        )
       );
     } catch (err) {
       setError(err.message);
     }
   };
+
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
+  };
+
+  const filteredWorkers = workers.filter((worker) => {
+    if (filter === 'active') return !worker.isDeleted;
+    if (filter === 'deleted') return worker.isDeleted;
+    return true;
+  });
 
   return (
     <div className='manageWorkersContainer'>
@@ -203,6 +224,7 @@ const ManageWorkers = () => {
                       name='isService'
                       checked={newWorker.role.isService}
                       onChange={handleRoleChange}
+                      disabled={newWorker.role.isManager}
                     />
                     Serwisant
                   </label>
@@ -212,38 +234,49 @@ const ManageWorkers = () => {
                       name='isManager'
                       checked={newWorker.role.isManager}
                       onChange={handleRoleChange}
+                      disabled={newWorker.role.isService}
                     />
                     Manager
                   </label>
                 </div>
               </div>
             )}
-            {role.isService && (
-              <div>
-                <label>Manager:</label>
-                <select
-                  name='manager'
-                  value={newWorker.manager}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value=''>Wybierz managera</option>
-                  {managers.map((manager) => (
-                    <option key={manager.PK} value={manager.PK}>
-                      {getAttribute(manager.cognitoAttributes, 'given_name')}{' '}
-                      {getAttribute(manager.cognitoAttributes, 'family_name')}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
+            {role.isService &&
+              !newWorker.role.isService &&
+              !newWorker.role.isManager && (
+                <div>
+                  <label>Manager:</label>
+                  <select
+                    name='manager'
+                    value={newWorker.manager}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value=''>Wybierz managera</option>
+                    {managers.map((manager) => (
+                      <option key={manager.PK} value={manager.PK}>
+                        {getAttribute(manager.cognitoAttributes, 'given_name')}{' '}
+                        {getAttribute(manager.cognitoAttributes, 'family_name')}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
             <button type='submit' className='btn'>
               Dodaj pracownika
             </button>
           </form>
+          <div className='filterContainer'>
+            <label>Filtruj: </label>
+            <select value={filter} onChange={handleFilterChange}>
+              <option value='all'>Wszyscy</option>
+              <option value='active'>Aktywni</option>
+              <option value='deleted'>Usunięci</option>
+            </select>
+          </div>
         </div>
         <div className='secContainer'>
-          {workers.map((worker, index) => (
+          {filteredWorkers.map((worker, index) => (
             <div key={index} className='singleItem'>
               <h4>
                 {getAttribute(worker.cognitoAttributes, 'given_name')}{' '}
@@ -252,9 +285,12 @@ const ManageWorkers = () => {
               <p>
                 <small>{getAttribute(worker.cognitoAttributes, 'email')}</small>
               </p>
-              <button onClick={() => handleDelete(worker.PK)} className='btn'>
-                Usuń pracownika
-              </button>
+              {!worker.isDeleted && (
+                <button onClick={() => handleDelete(worker.PK)} className='btn'>
+                  Usuń pracownika
+                </button>
+              )}
+              {worker.isDeleted && <p>Status: Usunięty</p>}
             </div>
           ))}
         </div>

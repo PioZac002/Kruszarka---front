@@ -6,8 +6,11 @@ import Activity from './Body Section/Activity Section/Activity';
 import Listing from './Body Section/Listing Section/Listing';
 import Sidebar from './SideBar Section/Sidebar';
 import Body from './Body Section/Body';
+
 const Dashboard = () => {
-  const role = JSON.parse(localStorage.getItem('role'));
+  const role = localStorage.getItem('role')
+    ? JSON.parse(localStorage.getItem('role'))
+    : {};
   const { isManager, isService } = role;
 
   return (
@@ -16,8 +19,8 @@ const Dashboard = () => {
       <div className='mainContent'>
         <Top />
         <div className='bottom flex'>
-          {isManager && <Listing />}
-          {isService && <Activity />}
+          {(isManager || isService) && <Listing />}
+          <Activity />
           {!isManager && !isService && (
             <p>
               Jesteś zwykłym pracownikiem. Nie masz uprawnień do zarządzania

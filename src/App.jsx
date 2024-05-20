@@ -6,6 +6,7 @@ import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import ManageIntegrators from './components/ManageIntegrators/ManageIntegrators';
 import ManageWorkers from './components/ManageWorkers/ManageWorkers';
+import ManageGroups from './components/ManageGroups/ManageGroups'; // Importuj ManageGroups
 import './App.scss';
 
 const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: '/manage-workers',
     element: <ManageWorkers />,
+  },
+  {
+    path: '/manage-groups', // Dodaj nową ścieżkę
+    element: <ManageGroups />,
   },
 ]);
 

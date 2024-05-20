@@ -22,6 +22,25 @@
 }
 
 .listingSection {
+  .managerSelect {
+    margin-bottom: 1rem;
+    label {
+      margin-right: 0.5rem;
+      font-size: var(--normalFontSize);
+      color: var(--textColor);
+    }
+    select {
+      padding: 0.5rem;
+      font-size: var(--normalFontSize);
+      border: 1px solid var(--inputColor);
+      border-radius: 4px;
+      &:focus {
+        outline: none;
+        border-color: var(--PrimaryColor);
+      }
+    }
+  }
+
   flex-basis: 70%;
   .heading {
     width: 100%;

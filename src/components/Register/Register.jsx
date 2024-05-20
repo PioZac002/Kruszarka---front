@@ -12,7 +12,6 @@ import videoLogin from '../../assets/videoLogin.mp4';
 import { FaUserShield } from 'react-icons/fa';
 import { AiOutlineSwapRight } from 'react-icons/ai';
 import { BsFillShieldLockFill } from 'react-icons/bs';
-import { MdEmail } from 'react-icons/md';
 
 const Register = () => {
   const [newPassword, setNewPassword] = useState('');
@@ -30,7 +29,7 @@ const Register = () => {
     setError(null);
 
     if (newPassword !== confirmPassword) {
-      setError('Passwords do not match');
+      setError('Hasła nie są zgodne');
       return;
     }
 
@@ -46,18 +45,36 @@ const Register = () => {
       if (response.ok) {
         const { access_token, id_token, userID } = data;
 
-        // Zapisz tokeny i ID użytkownika w lokalnym storage lub kontekście aplikacji
+        // Zapisz tokeny i ID użytkownika w local storage
         localStorage.setItem('access_token', access_token);
         localStorage.setItem('id_token', id_token);
         localStorage.setItem('userID', userID);
 
-        // Przekierowanie do głównej strony aplikacji
+        // Pobierz dane użytkownika
+        const fetchUserResponse = await fetch(
+          endpoints.getUser(userID, userID),
+          {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${id_token}`,
+            },
+          }
+        );
+
+        if (!fetchUserResponse.ok) {
+          throw new Error('Nie udało się pobrać danych użytkownika');
+        }
+
+        const userData = await fetchUserResponse.json();
+        localStorage.setItem('role', JSON.stringify(userData.user.role));
+
+        // Przekierowanie do dashboardu
         navigate('/dashboard');
       } else {
-        setError('Failed to change password. Please try again.');
+        setError('Nie udało się zmienić hasła. Spróbuj ponownie.');
       }
     } catch (err) {
-      setError('Failed to change password. Please try again.');
+      setError('Nie udało się zmienić hasła. Spróbuj ponownie.');
     }
   };
 
@@ -74,9 +91,9 @@ const Register = () => {
             </p>
           </div>
           <div className='footerDiv flex'>
-            <span className='text'>Have an account?</span>
+            <span className='text'>Masz konto?</span>
             <Link to={'/'}>
-              <button className='btn'>Log in</button>
+              <button className='btn'>Zaloguj się</button>
             </Link>
           </div>
         </div>
@@ -89,13 +106,13 @@ const Register = () => {
           <form className='form grid' onSubmit={handleSubmit}>
             {error && <span className='showMessage'>{error}</span>}
             <div className='inputDiv'>
-              <label htmlFor='newPassword'>Hasło</label>
+              <label htmlFor='newPassword'>Nowe hasło</label>
               <div className='input flex'>
                 <BsFillShieldLockFill className='icon' />
                 <input
                   type='password'
                   id='newPassword'
-                  placeholder='Enter new password'
+                  placeholder='Wprowadź nowe hasło'
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   required
@@ -109,7 +126,7 @@ const Register = () => {
                 <input
                   type='password'
                   id='confirmPassword'
-                  placeholder='Confirm new password'
+                  placeholder='Powtórz nowe hasło'
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
@@ -118,11 +135,11 @@ const Register = () => {
             </div>
 
             <button type='submit' className='btn flex'>
-              <span>Register</span>
+              <span>Zarejestruj się</span>
               <AiOutlineSwapRight className='icon' />
             </button>
             <span className='forgotPassword'>
-              Forgot your password? <a href=''>Click here</a>
+              Zapomniałeś hasła? <a href=''>Kliknij tutaj</a>
             </span>
           </form>
         </div>

@@ -22,6 +22,24 @@
 .activitySection {
   flex-basis: 50%;
 }
+.activitySection .managerSelect {
+  margin-bottom: 1rem;
+}
+.activitySection .managerSelect label {
+  margin-right: 0.5rem;
+  font-size: var(--normalFontSize);
+  color: var(--textColor);
+}
+.activitySection .managerSelect select {
+  padding: 0.5rem;
+  font-size: var(--normalFontSize);
+  border: 1px solid var(--inputColor);
+  border-radius: 4px;
+}
+.activitySection .managerSelect select:focus {
+  outline: none;
+  border-color: var(--PrimaryColor);
+}
 .activitySection .heading {
   width: 100%;
   justify-content: space-between;

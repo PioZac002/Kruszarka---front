@@ -35,16 +35,16 @@ const Login = () => {
       if (data.challengeName === 'NEW_PASSWORD_REQUIRED') {
         const { USER_ID_FOR_SRP } = data.challengeParameters;
         const { session } = data;
-        // Przekierowanie na stronę zmiany hasła z przekazaniem odpowiednich parametrów
+        // Przekierowanie na stronę zmiany hasła z odpowiednimi parametrami
         navigate(`/register?username=${USER_ID_FOR_SRP}&session=${session}`);
       } else {
         const { access_token, id_token, userID } = data;
-        // Zapisz tokeny i ID użytkownika w lokalnym storage lub kontekście aplikacji
+        // Zapisz tokeny i ID użytkownika w local storage
         localStorage.setItem('access_token', access_token);
         localStorage.setItem('id_token', id_token);
         localStorage.setItem('userID', userID);
 
-        // Fetch user data
+        // Pobierz dane użytkownika
         const fetchUserResponse = await fetch(
           endpoints.getUser(userID, userID),
           {
@@ -56,21 +56,19 @@ const Login = () => {
         );
 
         if (!fetchUserResponse.ok) {
-          throw new Error('Failed to fetch user data');
+          throw new Error('Nie udało się pobrać danych użytkownika');
         }
 
         const userData = await fetchUserResponse.json();
-        console.log('User data:', userData);
+        localStorage.setItem('role', JSON.stringify(userData.user.role));
 
-        // Save user role in localStorage
-        const { isManager, isService } = userData.user.role;
-        localStorage.setItem('role', JSON.stringify({ isManager, isService }));
-
-        // Przekierowanie do głównej strony aplikacji
+        // Przekierowanie do dashboardu
         navigate('/dashboard');
       }
     } catch (err) {
-      setError('Login failed. Please check your credentials and try again.');
+      setError(
+        'Logowanie nie powiodło się. Sprawdź swoje dane i spróbuj ponownie.'
+      );
     }
   };
 
@@ -87,41 +85,41 @@ const Login = () => {
             </p>
           </div>
           <div className='footerDiv flex'>
-            <span className='text'>Don't have an account?</span>
+            <span className='text'>Nie masz konta?</span>
             <Link to={'/register'}>
-              <button className='btn'>Sign Up</button>
+              <button className='btn'>Zarejestruj się</button>
             </Link>
           </div>
         </div>
         <div className='formDiv flex'>
           <div className='headerDiv'>
             <img src={logo} alt='logo' />
-            <h3>Welcome Back!</h3>
+            <h3>Witaj ponownie!</h3>
           </div>
 
           <form className='form grid' onSubmit={handleSubmit}>
             {error && <span className='showMessage'>{error}</span>}
             <div className='inputDiv'>
-              <label htmlFor='username'>Username</label>
+              <label htmlFor='username'>Nazwa użytkownika</label>
               <div className='input flex'>
                 <FaUserShield className='icon' />
                 <input
                   type='text'
                   id='username'
-                  placeholder='Enter username'
+                  placeholder='Wprowadź nazwę użytkownika'
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
             </div>
             <div className='inputDiv'>
-              <label htmlFor='password'>Password</label>
+              <label htmlFor='password'>Hasło</label>
               <div className='input flex'>
                 <BsFillShieldLockFill className='icon' />
                 <input
                   type='password'
                   id='password'
-                  placeholder='Enter password'
+                  placeholder='Wprowadź hasło'
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -129,11 +127,11 @@ const Login = () => {
             </div>
 
             <button type='submit' className='btn flex'>
-              <span>Login</span>
+              <span>Zaloguj się</span>
               <AiOutlineSwapRight className='icon' />
             </button>
             <span className='forgotPassword'>
-              Forgot your password? <a href=''>Click here</a>
+              Zapomniałeś hasła? <a href=''>Kliknij tutaj</a>
             </span>
           </form>
         </div>

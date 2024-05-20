@@ -7,6 +7,7 @@ const Body = () => {
   return (
     <div className='mainContent'>
       <Top />
+      <Activity />
       <div className='bottom flex'>
         <Listing />
         <Activity />
