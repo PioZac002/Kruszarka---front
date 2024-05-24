@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root {
   --PrimaryColor: hsl(94, 59%, 35%);
   --HoverColor: #bdf094;
@@ -21,12 +22,11 @@
 
 .manageIntegratorsContainer {
   display: flex;
-  min-height: 100vh;
+  flex-wrap: wrap;
+  height: 100vh;
 }
 .manageIntegratorsContainer .sidebar {
-  flex: 0 0 250px;
-  height: 100vh;
-  background: var(--PrimaryColor);
+  flex-basis: 250px;
 }
 .manageIntegratorsContainer .manageSection {
   flex: 1;
@@ -46,24 +46,33 @@
 .manageIntegratorsContainer .manageSection .header p {
   margin: 0 0 20px 0;
 }
-.manageIntegratorsContainer .manageSection .header form {
+.manageIntegratorsContainer .manageSection .header .formContainer {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 50%;
 }
-.manageIntegratorsContainer .manageSection .header form input,
-.manageIntegratorsContainer .manageSection .header form select {
+.manageIntegratorsContainer .manageSection .header .formContainer .formRow {
+  display: flex;
+  flex-direction: column;
+}
+.manageIntegratorsContainer .manageSection .header .formContainer .formRow label {
+  margin-bottom: 5px;
+}
+.manageIntegratorsContainer .manageSection .header .formContainer .formRow input,
+.manageIntegratorsContainer .manageSection .header .formContainer .formRow select {
   padding: 10px;
   border: 1px solid var(--inputColor);
   border-radius: 4px;
   font-size: var(--normalFontSize);
+  background: var(--whiteColor);
 }
-.manageIntegratorsContainer .manageSection .header form input:focus,
-.manageIntegratorsContainer .manageSection .header form select:focus {
+.manageIntegratorsContainer .manageSection .header .formContainer .formRow input:focus,
+.manageIntegratorsContainer .manageSection .header .formContainer .formRow select:focus {
   outline: none;
   border-color: var(--PrimaryColor);
 }
-.manageIntegratorsContainer .manageSection .header form .btn {
+.manageIntegratorsContainer .manageSection .header .formContainer .btn {
   padding: 10px 20px;
   background: var(--PrimaryColor);
   color: var(--whiteColor);
@@ -71,12 +80,44 @@
   border-radius: 4px;
   cursor: pointer;
 }
-.manageIntegratorsContainer .manageSection .header form .btn:hover {
+.manageIntegratorsContainer .manageSection .header .formContainer .btn:hover {
   background: var(--HoverColor);
+}
+.manageIntegratorsContainer .manageSection .header .filterManagerContainer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+  width: 100%;
+}
+.manageIntegratorsContainer .manageSection .header .filterManagerContainer .filterContainer,
+.manageIntegratorsContainer .manageSection .header .filterManagerContainer .managerSelect {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.manageIntegratorsContainer .manageSection .header .filterManagerContainer .filterContainer select,
+.manageIntegratorsContainer .manageSection .header .filterManagerContainer .managerSelect select {
+  padding: 10px;
+  border: 1px solid var(--inputColor);
+  border-radius: 4px;
+  font-size: var(--normalFontSize);
+  background: var(--whiteColor);
+}
+.manageIntegratorsContainer .manageSection .header .filterManagerContainer .filterContainer select:focus,
+.manageIntegratorsContainer .manageSection .header .filterManagerContainer .managerSelect select:focus {
+  outline: none;
+  border-color: var(--PrimaryColor);
+}
+.manageIntegratorsContainer .manageSection .header .filterManagerContainer .filterContainer label,
+.manageIntegratorsContainer .manageSection .header .filterManagerContainer .managerSelect label {
+  font-size: var(--normalFontSize);
+  color: var(--textColor);
 }
 .manageIntegratorsContainer .manageSection .secContainer {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 20px;
 }
 .manageIntegratorsContainer .manageSection .secContainer .singleItem {
@@ -84,12 +125,14 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  width: 300px; /* Stała szerokość */
+}
+.manageIntegratorsContainer .manageSection .secContainer .singleItem:hover {
+  background: var(--itemCardHover);
+  box-shadow: 0 2px 2px var(--inputColor);
 }
 .manageIntegratorsContainer .manageSection .secContainer .singleItem h4 {
-  margin: 0;
+  margin: 0 0 10px 0;
 }
 .manageIntegratorsContainer .manageSection .secContainer .singleItem p {
   margin: 0;
@@ -109,7 +152,7 @@
 
 @media screen and (max-width: 1200px) {
   .manageIntegratorsContainer {
-    flex-direction: column;
+    flex-direction: row;
   }
   .sidebar {
     width: 100%;
@@ -123,6 +166,61 @@
   .sidebar {
     width: 100%;
     height: auto;
+  }
+  .manageSection {
+    width: 100%;
+    padding: 20px;
+  }
+  .secContainer .singleItem {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 460px) {
+  .manageIntegratorsContainer {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    flex-basis: auto;
+  }
+  .header {
+    width: 100%;
+  }
+  .header .formContainer {
+    width: 100%;
+  }
+  .header .formContainer .formRow input,
+  .header .formContainer .formRow select {
+    width: 100%;
+  }
+  .header .formContainer .btn {
+    width: 100%;
+  }
+  .header .filterManagerContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  .header .filterManagerContainer .filterContainer,
+  .header .filterManagerContainer .managerSelect {
+    flex-direction: column; /* Zmiana na kolumnowy układ */
+    width: 80%;
+    margin-left: -70px;
+  }
+  .header .filterManagerContainer .filterContainer select,
+  .header .filterManagerContainer .managerSelect select {
+    width: 100%;
+  }
+  .header .filterManagerContainer .filterContainer label,
+  .header .filterManagerContainer .managerSelect label {
+    width: 100%; /* Dostosowanie szerokości */
+  }
+  .secContainer {
+    flex-direction: column;
+  }
+  .secContainer .singleItem {
+    width: 70%;
   }
 }
 

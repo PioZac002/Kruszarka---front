@@ -12,6 +12,8 @@ const Listing = () => {
   const [integrators, setIntegrators] = useState([]);
   const [selectedManager, setSelectedManager] = useState('');
   const [error, setError] = useState(null);
+  const [showAllWorkers, setShowAllWorkers] = useState(false);
+  const [showAllIntegrators, setShowAllIntegrators] = useState(false);
   const navigate = useNavigate();
 
   const role = JSON.parse(localStorage.getItem('role'));
@@ -118,12 +120,17 @@ const Listing = () => {
     return attribute ? attribute.Value : 'N/A';
   };
 
+  const displayedWorkers = showAllWorkers ? workers : workers.slice(0, 5);
+  const displayedIntegrators = showAllIntegrators
+    ? integrators
+    : integrators.slice(0, 5);
+
   return (
     <div className='listingSection'>
-      {error && <div className='error'>{error}</div>}
+      {error && <div className='error'>{}</div>}
 
       <div className='heading flex'>
-        <h1>Lista kruszarek</h1>
+        <h2>Lista kruszarek</h2>
         <button
           className='btn flex'
           onClick={() => navigate('/manage-integrators')}
@@ -153,22 +160,32 @@ const Listing = () => {
         </div>
       )}
 
-      <div className='secContainer flex'>
+      <div className='secContainer'>
         {Array.isArray(integrators) && integrators.length > 0 ? (
-          integrators.map((integrator, index) => (
+          displayedIntegrators.map((integrator, index) => (
             <div className='singleItem' key={index}>
               <img src={crusherImage} alt='Integrator' />
-              <h3>Lokalizacja: </h3> <small>{integrator.location}</small>
-              <h3>Numer seryjny: </h3> <small>{integrator.serialNumber}</small>
+              <h3>{integrator.location}</h3>
+              <h3>{integrator.serialNumber}</h3>
             </div>
           ))
         ) : (
           <p>Brak integratorów do wyświetlenia.</p>
         )}
       </div>
+      {integrators.length > 5 && (
+        <button
+          className='btn showMoreBtn'
+          onClick={() => setShowAllIntegrators(!showAllIntegrators)}
+        >
+          {showAllIntegrators ? 'Pokaż mniej' : 'Wyświetl więcej'}
+        </button>
+      )}
+
+      <div className='spacing'></div>
 
       <div className='heading flex'>
-        <h1>Lista pracowników</h1>
+        <h2>Lista pracowników</h2>
         <button
           className='btn flex'
           onClick={() => navigate('/manage-workers')}
@@ -176,10 +193,10 @@ const Listing = () => {
           Zarządzaj <HiOutlineArrowLongRight className='icon' />
         </button>
       </div>
-      <div className='secContainer flex'>
+      <div className='listContainer'>
         {Array.isArray(workers) && workers.length > 0 ? (
-          workers.map((worker, index) => (
-            <div className='singleItem' key={index}>
+          displayedWorkers.map((worker, index) => (
+            <div className='listItem' key={index}>
               <h3>
                 {getAttribute(worker.cognitoAttributes, 'given_name')}{' '}
                 {getAttribute(worker.cognitoAttributes, 'family_name')}
@@ -191,6 +208,14 @@ const Listing = () => {
           <p>Brak pracowników do wyświetlenia.</p>
         )}
       </div>
+      {workers.length > 5 && (
+        <button
+          className='btn showMoreBtn'
+          onClick={() => setShowAllWorkers(!showAllWorkers)}
+        >
+          {showAllWorkers ? 'Pokaż mniej' : 'Wyświetl więcej'}
+        </button>
+      )}
     </div>
   );
 };

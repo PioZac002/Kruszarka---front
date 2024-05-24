@@ -335,8 +335,9 @@ const ManageGroups = () => {
   };
 
   const handleOptionSelect = (groupID, option) => {
-    if (option === 'deleteGroup') {
-      handleDelete(groupID);
+    if (selectedGroup === groupID && selectedOption === option) {
+      setSelectedOption(null); // Deselect the option if the same option is clicked again
+      setSelectedGroup(null);
     } else {
       setSelectedOption(option);
       setSelectedGroup(groupID);

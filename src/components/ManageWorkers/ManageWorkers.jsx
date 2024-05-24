@@ -267,6 +267,7 @@ const ManageWorkers = () => {
             </button>
           </form>
           <div className='filterContainer'>
+            <h3>Lista pracowników</h3>
             <label>Filtruj: </label>
             <select value={filter} onChange={handleFilterChange}>
               <option value='all'>Wszyscy</option>

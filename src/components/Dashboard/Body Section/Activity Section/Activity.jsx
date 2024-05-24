@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Activity.css';
+import './Activity.scss';
 import { HiOutlineArrowLongRight } from 'react-icons/hi2';
-import userImage from '../../../../assets/guyImage.png';
 import { endpoints } from '../../../../api';
 
 const Activity = () => {
@@ -10,6 +9,7 @@ const Activity = () => {
   const [managers, setManagers] = useState([]);
   const [selectedManager, setSelectedManager] = useState('');
   const [error, setError] = useState(null);
+  const [showMore, setShowMore] = useState(false);
   const navigate = useNavigate();
 
   const role = JSON.parse(localStorage.getItem('role'));
@@ -117,6 +117,8 @@ const Activity = () => {
     return attribute ? attribute.Value : 'N/A';
   };
 
+  const displayedGroups = showMore ? groups : groups.slice(0, 7);
+
   return (
     <div className='activitySection'>
       {error && <div className='error'>{error}</div>}
@@ -148,11 +150,10 @@ const Activity = () => {
         </div>
       )}
 
-      <div className='secContainer grid'>
-        {Array.isArray(groups) && groups.length > 0 ? (
-          groups.map((group, index) => (
-            <div className='singleCustomer flex' key={index}>
-              <img src={userImage} alt='Group' />
+      <div className='secContainer'>
+        {Array.isArray(displayedGroups) && displayedGroups.length > 0 ? (
+          displayedGroups.map((group, index) => (
+            <div className='singleCustomer' key={index}>
               <div className='customerDetails'>
                 <span className='name'>{group.integratorGroupName}</span>
               </div>
@@ -162,6 +163,11 @@ const Activity = () => {
           <p>Brak grup do wyświetlenia.</p>
         )}
       </div>
+      {groups.length > 7 && (
+        <button className='toggleButton' onClick={() => setShowMore(!showMore)}>
+          {showMore ? 'Pokaż mniej' : 'Wyświetl więcej'}
+        </button>
+      )}
     </div>
   );
 };

@@ -24,44 +24,46 @@
   flex-wrap: wrap;
   height: 100vh;
 }
-
-.manageSection {
+.manageGroupsContainer .sidebar {
+  flex-basis: 250px;
+}
+.manageGroupsContainer .manageSection {
   flex: 1;
   padding: 20px;
   background: var(--bgColor);
   overflow-y: auto;
 }
-.manageSection .header {
+.manageGroupsContainer .manageSection .header {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 20px;
 }
-.manageSection .header h1 {
+.manageGroupsContainer .manageSection .header h1 {
   margin: 0 0 10px 0;
 }
-.manageSection .header p {
+.manageGroupsContainer .manageSection .header p {
   margin: 0 0 20px 0;
 }
-.manageSection .header form {
+.manageGroupsContainer .manageSection .header form {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.manageSection .header form input,
-.manageSection .header form select {
+.manageGroupsContainer .manageSection .header form input,
+.manageGroupsContainer .manageSection .header form select {
   padding: 10px;
   border: 1px solid var(--inputColor);
   border-radius: 4px;
   font-size: var(--normalFontSize);
   background: var(--whiteColor);
 }
-.manageSection .header form input:focus,
-.manageSection .header form select:focus {
+.manageGroupsContainer .manageSection .header form input:focus,
+.manageGroupsContainer .manageSection .header form select:focus {
   outline: none;
   border-color: var(--PrimaryColor);
 }
-.manageSection .header form .btn {
+.manageGroupsContainer .manageSection .header form .btn {
   padding: 10px 20px;
   background: var(--PrimaryColor);
   color: var(--whiteColor);
@@ -69,59 +71,76 @@
   border-radius: 4px;
   cursor: pointer;
 }
-.manageSection .header form .btn:hover {
+.manageGroupsContainer .manageSection .header form .btn:hover {
   background: var(--HoverColor);
 }
-.manageSection .header .filterContainer {
+.manageGroupsContainer .manageSection .header .filterContainer {
   display: flex;
-  align-items: center;
-  gap: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
   margin-top: 20px;
 }
-.manageSection .header .filterContainer select {
+.manageGroupsContainer .manageSection .header .filterContainer select {
   padding: 10px;
   border: 1px solid var(--inputColor);
   border-radius: 4px;
   font-size: var(--normalFontSize);
   background: var(--whiteColor);
 }
-.manageSection .header .filterContainer select:focus {
+.manageGroupsContainer .manageSection .header .filterContainer select:focus {
   outline: none;
   border-color: var(--PrimaryColor);
 }
-.manageSection .header .filterContainer label {
+.manageGroupsContainer .manageSection .header .filterContainer label {
+  font-size: var(--normalFontSize);
+  color: var(--textColor);
+}
+.manageGroupsContainer .manageSection .managerSelect {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 10px;
+  margin-top: 20px;
 }
-.manageSection .header .filterContainer label input[type=checkbox] {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--PrimaryColor);
+.manageGroupsContainer .manageSection .managerSelect select {
+  padding: 10px;
+  border: 1px solid var(--inputColor);
+  border-radius: 4px;
+  font-size: var(--normalFontSize);
+  background: var(--whiteColor);
 }
-.manageSection .secContainer {
+.manageGroupsContainer .manageSection .managerSelect select:focus {
+  outline: none;
+  border-color: var(--PrimaryColor);
+}
+.manageGroupsContainer .manageSection .managerSelect label {
+  font-size: var(--normalFontSize);
+  color: var(--textColor);
+}
+.manageGroupsContainer .manageSection .secContainer {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
 }
-.manageSection .secContainer .singleItem {
+.manageGroupsContainer .manageSection .secContainer .singleItem {
   background: var(--whiteColor);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   position: relative;
 }
-.manageSection .secContainer .singleItem:hover {
+.manageGroupsContainer .manageSection .secContainer .singleItem:hover {
   background: var(--itemCardHover);
   box-shadow: 0 2px 2px var(--inputColor);
 }
-.manageSection .secContainer .singleItem h4 {
+.manageGroupsContainer .manageSection .secContainer .singleItem h4 {
   margin: 0 0 10px 0;
 }
-.manageSection .secContainer .singleItem p {
+.manageGroupsContainer .manageSection .secContainer .singleItem p {
   margin: 0;
 }
-.manageSection .secContainer .singleItem .btn {
+.manageGroupsContainer .manageSection .secContainer .singleItem .btn {
   margin-top: 10px;
   padding: 5px 10px;
   background: var(--PrimaryColor);
@@ -130,16 +149,16 @@
   border-radius: 4px;
   cursor: pointer;
 }
-.manageSection .secContainer .singleItem .btn:hover {
+.manageGroupsContainer .manageSection .secContainer .singleItem .btn:hover {
   background: var(--HoverColor);
 }
-.manageSection .secContainer .singleItem .icon {
+.manageGroupsContainer .manageSection .secContainer .singleItem .icon {
   position: absolute;
   top: 10px;
   right: 10px;
   cursor: pointer;
 }
-.manageSection .secContainer .singleItem .optionsMenu {
+.manageGroupsContainer .manageSection .secContainer .singleItem .optionsMenu {
   position: absolute;
   top: 35px;
   right: 10px;
@@ -151,43 +170,99 @@
   flex-direction: column;
   z-index: 10;
 }
-.manageSection .secContainer .singleItem .optionsMenu button {
+.manageGroupsContainer .manageSection .secContainer .singleItem .optionsMenu button {
   padding: 10px;
   background: none;
   border: none;
   cursor: pointer;
 }
-.manageSection .secContainer .singleItem .optionsMenu button:hover {
+.manageGroupsContainer .manageSection .secContainer .singleItem .optionsMenu button:hover {
   background: var(--HoverColor);
 }
-.manageSection .secContainer .singleItem .selectItem {
+.manageGroupsContainer .manageSection .secContainer .singleItem .selectItem {
   margin-top: 10px;
 }
-.manageSection .secContainer .singleItem .selectItem select {
+.manageGroupsContainer .manageSection .secContainer .singleItem .selectItem select {
   padding: 10px;
   border: 1px solid var(--inputColor);
   border-radius: 4px;
   font-size: var(--normalFontSize);
   background: var(--whiteColor);
 }
-.manageSection .secContainer .singleItem .selectItem select:focus {
+.manageGroupsContainer .manageSection .secContainer .singleItem .selectItem select:focus {
   outline: none;
   border-color: var(--PrimaryColor);
 }
-.manageSection .secContainer .singleItem .selectItem .btn {
+.manageGroupsContainer .manageSection .secContainer .singleItem .selectItem .btn {
   margin-top: 10px;
 }
 
-@media screen and (max-width: 918px) {
+@media screen and (max-width: 1200px) {
   .manageGroupsContainer {
     flex-direction: row;
   }
+  .sidebar {
+    width: 100%;
+    height: auto;
+  }
 }
-@media screen and (max-width: 490px) {
-  .manageSection .secContainer {
+@media screen and (max-width: 768px) {
+  .manageGroupsContainer {
     flex-direction: column;
   }
-  .manageSection .secContainer .singleItem {
+  .sidebar {
+    width: 100%;
+    height: auto;
+  }
+  .manageSection {
+    width: 100%;
+    padding: 20px;
+  }
+  .secContainer .singleItem {
+    width: calc(50% - 20px);
+  }
+}
+@media screen and (max-width: 460px) {
+  .manageGroupsContainer {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    flex-basis: auto;
+  }
+  .header {
+    width: 100%;
+  }
+  .header .formContainer {
+    width: 100%;
+  }
+  .header .formContainer .formRow input,
+  .header .formContainer .formRow select {
+    width: 100%;
+  }
+  .header .formContainer .btn {
+    width: 100%;
+  }
+  .header .filterContainer,
+  .header .managerSelect {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  .header .filterContainer select,
+  .header .managerSelect select {
+    width: 100%;
+  }
+  .header .filterContainer label,
+  .header .managerSelect label {
+    width: auto;
+  }
+  .secContainer {
+    width: 90%;
+    flex-direction: column;
+  }
+  .secContainer .singleItem {
     width: 100%;
   }
 }

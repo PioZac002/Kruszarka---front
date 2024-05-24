@@ -20,6 +20,7 @@
   --smallFontSize: 0.813rem;
   --smallestFontSize: 0.75rem;
 }
+
 .activitySection {
   .managerSelect {
     margin-bottom: 1rem;
@@ -58,24 +59,24 @@
   }
   .secContainer {
     margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     .singleCustomer {
-      align-items: flex-start;
-      justify-content: space-between;
-      img {
-        width: 40px;
-        height: 40px;
-        object-fit: cover;
-        border-radius: 50%;
-        box-shadow: 0 2px 4px var(--itemCardColor);
-        margin-right: 1rem;
+      padding: 1rem;
+      border: 1px solid var(--itemCardColor);
+      border-radius: 8px;
+      background: var(--whiteColor);
+      box-shadow: 0 2px 4px var(--itemCardColor);
+      &:hover {
+        background: var(--itemCardHover);
+        box-shadow: 0 2px 4px var(--PrimaryColor);
       }
       .customerDetails {
-        flex: 1;
         .name {
           font-size: var(--h3FontSize);
           font-weight: 600;
           color: var(--blackColor);
-          display: block;
         }
         small {
           font-weight: 500;
@@ -83,11 +84,18 @@
           font-size: var(--smallFontSize);
         }
       }
-      .duration {
-        color: var(--textColor);
-        font-weight: 500;
-        font-size: var(--smallFontSize);
-      }
+    }
+  }
+  .toggleButton {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: var(--PrimaryColor);
+    color: var(--whiteColor);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    &:hover {
+      background: var(--HoverColor);
     }
   }
 }

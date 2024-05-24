@@ -25,65 +25,96 @@
   display: flex;
   flex-wrap: wrap;
   height: 100vh;
-}
 
-.manageSection {
-  flex: 1;
-  padding: 20px;
-  background: var(--bgColor);
-  overflow-y: auto;
+  .sidebar {
+    flex-basis: 250px;
+  }
 
-  .header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 20px;
+  .manageSection {
+    flex: 1;
+    padding: 20px;
+    background: var(--bgColor);
+    overflow-y: auto;
 
-    h1 {
-      margin: 0 0 10px 0;
-    }
-
-    p {
-      margin: 0 0 20px 0;
-    }
-
-    form {
+    .header {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 20px;
 
-      input,
-      select {
-        padding: 10px;
-        border: 1px solid var(--inputColor);
-        border-radius: 4px;
-        font-size: var(--normalFontSize);
-        background: var(--whiteColor);
+      h1 {
+        margin: 0 0 10px 0;
+      }
 
-        &:focus {
-          outline: none;
-          border-color: var(--PrimaryColor);
+      p {
+        margin: 0 0 20px 0;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        input,
+        select {
+          padding: 10px;
+          border: 1px solid var(--inputColor);
+          border-radius: 4px;
+          font-size: var(--normalFontSize);
+          background: var(--whiteColor);
+
+          &:focus {
+            outline: none;
+            border-color: var(--PrimaryColor);
+          }
+        }
+
+        .btn {
+          padding: 10px 20px;
+          background: var(--PrimaryColor);
+          color: var(--whiteColor);
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+
+          &:hover {
+            background: var(--HoverColor);
+          }
         }
       }
 
-      .btn {
-        padding: 10px 20px;
-        background: var(--PrimaryColor);
-        color: var(--whiteColor);
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
+      .filterContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 20px;
 
-        &:hover {
-          background: var(--HoverColor);
+        select {
+          padding: 10px;
+          border: 1px solid var(--inputColor);
+          border-radius: 4px;
+          font-size: var(--normalFontSize);
+          background: var(--whiteColor);
+
+          &:focus {
+            outline: none;
+            border-color: var(--PrimaryColor);
+          }
+        }
+
+        label {
+          font-size: var(--normalFontSize);
+          color: var(--textColor);
         }
       }
     }
 
-    .filterContainer {
+    .managerSelect {
       display: flex;
-      align-items: center;
-      gap: 20px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
       margin-top: 20px;
 
       select {
@@ -100,126 +131,186 @@
       }
 
       label {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-
-        input[type='checkbox'] {
-          width: 16px;
-          height: 16px;
-          accent-color: var(--PrimaryColor);
-        }
+        font-size: var(--normalFontSize);
+        color: var(--textColor);
       }
     }
-  }
 
-  .secContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    .secContainer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
 
-    .singleItem {
-      background: var(--whiteColor);
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      position: relative;
-
-      &:hover {
-        background: var(--itemCardHover);
-        box-shadow: 0 2px 2px var(--inputColor);
-      }
-
-      h4 {
-        margin: 0 0 10px 0;
-      }
-
-      p {
-        margin: 0;
-      }
-
-      .btn {
-        margin-top: 10px;
-        padding: 5px 10px;
-        background: var(--PrimaryColor);
-        color: var(--whiteColor);
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
+      .singleItem {
+        background: var(--whiteColor);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        position: relative;
 
         &:hover {
-          background: var(--HoverColor);
+          background: var(--itemCardHover);
+          box-shadow: 0 2px 2px var(--inputColor);
         }
-      }
 
-      .icon {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        cursor: pointer;
-      }
+        h4 {
+          margin: 0 0 10px 0;
+        }
 
-      .optionsMenu {
-        position: absolute;
-        top: 35px;
-        right: 10px;
-        background: var(--whiteColor);
-        border: 1px solid var(--inputColor);
-        border-radius: 4px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        display: flex;
-        flex-direction: column;
-        z-index: 10;
+        p {
+          margin: 0;
+        }
 
-        button {
-          padding: 10px;
-          background: none;
+        .btn {
+          margin-top: 10px;
+          padding: 5px 10px;
+          background: var(--PrimaryColor);
+          color: var(--whiteColor);
           border: none;
+          border-radius: 4px;
           cursor: pointer;
 
           &:hover {
             background: var(--HoverColor);
           }
         }
-      }
 
-      .selectItem {
-        margin-top: 10px;
+        .icon {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          cursor: pointer;
+        }
 
-        select {
-          padding: 10px;
+        .optionsMenu {
+          position: absolute;
+          top: 35px;
+          right: 10px;
+          background: var(--whiteColor);
           border: 1px solid var(--inputColor);
           border-radius: 4px;
-          font-size: var(--normalFontSize);
-          background: var(--whiteColor);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          display: flex;
+          flex-direction: column;
+          z-index: 10;
 
-          &:focus {
-            outline: none;
-            border-color: var(--PrimaryColor);
+          button {
+            padding: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+
+            &:hover {
+              background: var(--HoverColor);
+            }
           }
         }
 
-        .btn {
+        .selectItem {
           margin-top: 10px;
+
+          select {
+            padding: 10px;
+            border: 1px solid var(--inputColor);
+            border-radius: 4px;
+            font-size: var(--normalFontSize);
+            background: var(--whiteColor);
+
+            &:focus {
+              outline: none;
+              border-color: var(--PrimaryColor);
+            }
+          }
+
+          .btn {
+            margin-top: 10px;
+          }
         }
       }
     }
   }
 }
 
-@media screen and (max-width: 918px) {
+@media screen and (max-width: 1200px) {
   .manageGroupsContainer {
     flex-direction: row;
   }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+  }
 }
 
-@media screen and (max-width: 490px) {
+@media screen and (max-width: 768px) {
+  .manageGroupsContainer {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+  }
+
   .manageSection {
-    .secContainer {
-      flex-direction: column;
-      .singleItem {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .secContainer .singleItem {
+    width: calc(50% - 20px);
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .manageGroupsContainer {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    flex-basis: auto;
+  }
+
+  .header {
+    width: 100%;
+    .formContainer {
+      width: 100%;
+
+      .formRow {
+        input,
+        select {
+          width: 100%;
+        }
+      }
+
+      .btn {
         width: 100%;
       }
+    }
+
+    .filterContainer,
+    .managerSelect {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+
+      select {
+        width: 100%;
+      }
+
+      label {
+        width: auto;
+      }
+    }
+  }
+
+  .secContainer {
+    width: 90%;
+    flex-direction: column;
+    .singleItem {
+      width: 100%;
     }
   }
 }

@@ -197,26 +197,8 @@ const ManageIntegrators = () => {
         <div className='header'>
           <h1>Zarządzaj integratorami</h1>
           <p>Dodawanie i usuwanie integratorów</p>
-          {role.isService && (
-            <div className='managerSelect'>
-              <label htmlFor='manager'>Wybierz managera: </label>
-              <select
-                id='manager'
-                value={selectedManager}
-                onChange={handleManagerChange}
-              >
-                <option value=''>Wybierz...</option>
-                {managers.map((manager) => (
-                  <option key={manager.PK} value={manager.PK}>
-                    {getAttribute(manager.cognitoAttributes, 'given_name')}{' '}
-                    {getAttribute(manager.cognitoAttributes, 'family_name')}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-          <form onSubmit={handleSubmit}>
-            <div>
+          <form onSubmit={handleSubmit} className='formContainer'>
+            <div className='formRow'>
               <label>Lokacja:</label>
               <input
                 type='text'
@@ -226,7 +208,7 @@ const ManageIntegrators = () => {
                 required
               />
             </div>
-            <div>
+            <div className='formRow'>
               <label>Numer Seryjny:</label>
               <input
                 type='text'
@@ -237,7 +219,7 @@ const ManageIntegrators = () => {
               />
             </div>
             {role.isService && (
-              <div>
+              <div className='formRow'>
                 <label>Manager:</label>
                 <select
                   name='userID'
@@ -259,13 +241,33 @@ const ManageIntegrators = () => {
               Dodaj integrator
             </button>
           </form>
-          <div className='filterContainer'>
-            <label>Filtruj: </label>
-            <select value={filter} onChange={handleFilterChange}>
-              <option value='all'>Wszystkie</option>
-              <option value='active'>Aktywne</option>
-              <option value='deleted'>Usunięte</option>
-            </select>
+          <div className='filterManagerContainer'>
+            <div className='filterContainer'>
+              <label>Filtruj: </label>
+              <select value={filter} onChange={handleFilterChange}>
+                <option value='all'>Wszystkie</option>
+                <option value='active'>Aktywne</option>
+                <option value='deleted'>Usunięte</option>
+              </select>
+            </div>
+            {role.isService && (
+              <div className='managerSelect'>
+                <label htmlFor='manager'>Wybierz managera: </label>
+                <select
+                  id='manager'
+                  value={selectedManager}
+                  onChange={handleManagerChange}
+                >
+                  <option value=''>Wybierz...</option>
+                  {managers.map((manager) => (
+                    <option key={manager.PK} value={manager.PK}>
+                      {getAttribute(manager.cognitoAttributes, 'given_name')}{' '}
+                      {getAttribute(manager.cognitoAttributes, 'family_name')}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
           </div>
         </div>
         <div className='secContainer'>

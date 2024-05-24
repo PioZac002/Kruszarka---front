@@ -1,4 +1,6 @@
+import React from 'react';
 import './Sidebar.css';
+import { Link } from 'react-router-dom';
 
 ///imported Images
 import logo from '../../../assets/logoKruszarka.png';
@@ -23,31 +25,31 @@ const Sidebar = () => {
         <h3 className='divTitle'>QUICK MENU</h3>
         <ul className='menuLists grid'>
           <li className='listItem'>
-            <a className='menuLink flex' href='#'>
+            <Link className='menuLink flex' to='/dashboard'>
               <IoMdSpeedometer className='icon' />
               <span className='smallText'>Dashboard</span>
-            </a>
+            </Link>
           </li>
 
           <li className='listItem'>
-            <a className='menuLink flex' href='#'>
+            <Link className='menuLink flex' to='/manage-integrators'>
               <BiSlideshow className='icon' />
               <span className='smallText'>Wyświetl kruszarki</span>
-            </a>
+            </Link>
           </li>
 
           <li className='listItem'>
-            <a className='menuLink flex' href='#'>
+            <Link className='menuLink flex' to='/manage-workers'>
               <MdOutlineAssignmentInd className='icon' />
               <span className='smallText'>Wyświetl Pracowników</span>
-            </a>
+            </Link>
           </li>
 
           <li className='listItem'>
-            <a className='menuLink flex' href='#'>
+            <Link className='menuLink flex' to='/diagrams'>
               <PiLineSegmentsBold className='icon' />
               <span className='smallText'>Wykresy efektywności</span>
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
@@ -56,31 +58,31 @@ const Sidebar = () => {
         <h3 className='divTitle'>SETTINGS</h3>
         <ul className='menuLists grid'>
           <li className='listItem'>
-            <a className='menuLink flex' href='#'>
+            <Link className='menuLink flex' to='/manage-groups'>
               <FaUserPlus className='icon' />
-              <span className='smallText'>Zarządzaj pracownikami</span>
-            </a>
+              <span className='smallText'>Zarządzaj grupami</span>
+            </Link>
           </li>
 
           <li className='listItem'>
-            <a className='menuLink flex' href='#'>
+            <Link className='menuLink flex' to='/manage-integrators'>
               <TbPrismPlus className='icon' />
               <span className='smallText'>Zarządzaj kruszarkami</span>
-            </a>
+            </Link>
           </li>
 
           <li className='listItem'>
-            <a className='menuLink flex' href='#'>
+            <Link className='menuLink flex' to='/manage-workers'>
               <MdOutlineAssignmentInd className='icon' />
               <span className='smallText'>Wyświetl Pracowników</span>
-            </a>
+            </Link>
           </li>
 
           <li className='listItem'>
-            <a className='menuLink flex' href='#'>
+            <Link className='menuLink flex' to='/diagrams'>
               <PiLineSegmentsBold className='icon' />
               <span className='smallText'>Wykresy efektywności</span>
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
@@ -97,4 +99,5 @@ const Sidebar = () => {
     </div>
   );
 };
+
 export default Sidebar;
