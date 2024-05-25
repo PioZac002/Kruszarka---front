@@ -12,7 +12,7 @@ import { FaRegQuestionCircle } from 'react-icons/fa';
 const Top = () => {
   return (
     <div className='topSection'>
-      {/* <div className='headerSection flex'>
+      <div className='headerSection flex'>
         <div className='title'>
           <h1>Welcome</h1>
           <p>Program do zarządzania kruszarkami ez</p>
@@ -28,7 +28,7 @@ const Top = () => {
             <img src={adminImage} alt='Admin Image' />
           </div>
         </div>
-      </div> */}
+      </div>
 
       <div className='cardSection flex'>
         <div className='rightCard flex'>
