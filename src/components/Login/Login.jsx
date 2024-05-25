@@ -84,12 +84,12 @@ const Login = () => {
               technicznym oraz przeglądami.
             </p>
           </div>
-          <div className='footerDiv flex'>
+          {/* <div className='footerDiv flex'>
             <span className='text'>Nie masz konta?</span>
             <Link to={'/register'}>
               <button className='btn'>Zarejestruj się</button>
             </Link>
-          </div>
+          </div> */}
         </div>
         <div className='formDiv flex'>
           <div className='headerDiv'>
@@ -100,11 +100,11 @@ const Login = () => {
           <form className='form grid' onSubmit={handleSubmit}>
             {error && <span className='showMessage'>{error}</span>}
             <div className='inputDiv'>
-              <label htmlFor='username'>Nazwa użytkownika</label>
+              <label htmlFor='username'>Email</label>
               <div className='input flex'>
                 <FaUserShield className='icon' />
                 <input
-                  type='text'
+                  type='email'
                   id='username'
                   placeholder='Wprowadź nazwę użytkownika'
                   value={username}
@@ -130,9 +130,9 @@ const Login = () => {
               <span>Zaloguj się</span>
               <AiOutlineSwapRight className='icon' />
             </button>
-            <span className='forgotPassword'>
+            {/* <span className='forgotPassword'>
               Zapomniałeś hasła? <a href=''>Kliknij tutaj</a>
-            </span>
+            </span> */}
           </form>
         </div>
       </div>

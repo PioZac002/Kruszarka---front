@@ -6,7 +6,7 @@ import Top from './Top Section/Top';
 const Body = () => {
   return (
     <div className='mainContent'>
-      <Top />
+      {/* <Top /> */}
       <Activity />
       <div className='bottom flex'>
         <Listing />
