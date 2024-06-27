@@ -1,0 +1,196 @@
+:root {
+  /* Colors and styles */
+  --PrimaryColor: hsl(94, 59%, 35%);
+  --HoverColor: #bdf094;
+  --paleGreen: hsl(96, 75%, 89%);
+  --whiteColor: hsl(0, 0%, 100%);
+  --blackColor: hsl(0, 0%, 18%);
+  --textColor: hsl(240, 1%, 48%);
+  --greyText: rgb(190, 190, 190);
+  --bgColor: hsl(220, 10%, 94%);
+  --inputColor: hsl(330, 12%, 97%);
+  --itemCardColor: hsl(120, 5%, 88%);
+  --itemCardHover: hsl(120, 27%, 87%);
+  /* Fonts and Typography */
+  --biggestFontSize: 2.5rem;
+  --h1FontSize: 1.5rem;
+  --h2FontSize: 1.25rem;
+  --h3FontSize: 1rem;
+  --normalFontSize: 0.938rem;
+  --smallFontSize: 0.813rem;
+  --smallestFontSize: 0.75rem;
+  /* New button colors */
+  --buttonPrimaryColor: hsl(94, 59%, 35%);
+  --buttonHoverColor: #bdf094;
+}
+
+.diagramsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100vh;
+}
+.diagramsContainer .sidebar {
+  flex-basis: 300px; /* Adjusted width for sidebar */
+}
+.diagramsContainer .mainContent {
+  flex: 1;
+  padding: 20px;
+  background: var(--bgColor);
+  overflow-y: auto;
+}
+.diagramsContainer .mainContent h1 {
+  font-size: var(--h1FontSize);
+  color: var(--blackColor);
+  margin-bottom: 20px;
+}
+.diagramsContainer .mainContent .form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.diagramsContainer .mainContent .form div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.diagramsContainer .mainContent .form div label {
+  font-weight: bold;
+}
+.diagramsContainer .mainContent .form div input,
+.diagramsContainer .mainContent .form div select {
+  padding: 10px;
+  border: 1px solid var(--greyText);
+  border-radius: 4px;
+  font-size: var(--normalFontSize);
+}
+.diagramsContainer .mainContent .form div input:focus,
+.diagramsContainer .mainContent .form div select:focus {
+  outline: none;
+  border-color: var(--PrimaryColor);
+}
+.diagramsContainer .mainContent .form .btn {
+  align-self: flex-start;
+  padding: 10px 20px;
+  background-color: var(--buttonPrimaryColor);
+  color: var(--whiteColor);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.diagramsContainer .mainContent .form .btn:hover {
+  background-color: var(--buttonHoverColor);
+}
+.diagramsContainer .mainContent .managerSelect {
+  margin-bottom: 20px;
+}
+.diagramsContainer .mainContent .managerSelect label {
+  margin-right: 10px;
+  font-size: var(--normalFontSize);
+}
+.diagramsContainer .mainContent .managerSelect select {
+  padding: 8px;
+  border: 1px solid var(--greyText);
+  border-radius: 4px;
+  font-size: var(--normalFontSize);
+}
+.diagramsContainer .mainContent .managerSelect select:focus {
+  outline: none;
+  border-color: var(--PrimaryColor);
+}
+.diagramsContainer .mainContent .error {
+  color: red;
+}
+.diagramsContainer .mainContent ul {
+  list-style-type: none;
+  padding: 0;
+}
+.diagramsContainer .mainContent ul li {
+  padding: 10px;
+  border-bottom: 1px solid var(--greyText);
+}
+.diagramsContainer .mainContent ul li ul {
+  margin-top: 10px;
+  padding-left: 20px;
+  list-style-type: disc;
+}
+.diagramsContainer .mainContent ul li .btn {
+  margin-top: 5px;
+  padding: 5px 10px;
+  background-color: var(--buttonPrimaryColor);
+  color: var(--whiteColor);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.diagramsContainer .mainContent ul li .btn:hover {
+  background-color: var(--buttonHoverColor);
+}
+.diagramsContainer .mainContent .selectedData {
+  margin-top: 20px;
+}
+.diagramsContainer .mainContent .selectedData h3 {
+  margin-bottom: 10px;
+}
+.diagramsContainer .mainContent .selectedData ul {
+  padding-left: 0;
+}
+.diagramsContainer .mainContent .selectedData ul li {
+  padding: 10px;
+  border: 1px solid var(--greyText);
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 1200px) {
+  .diagramsContainer {
+    flex-direction: row;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+  }
+}
+@media screen and (max-width: 768px) {
+  .diagramsContainer {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+  }
+  .mainContent {
+    width: 100%;
+    padding: 20px;
+  }
+}
+@media screen and (max-width: 460px) {
+  .diagramsContainer {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    flex-basis: auto;
+  }
+  .mainContent {
+    width: 100%;
+    padding: 20px;
+  }
+  .form div input,
+  .form div select {
+    width: 100%;
+  }
+  .form .btn {
+    width: 100%;
+  }
+  .managerSelect select {
+    width: 100%;
+  }
+  .selectedData ul li {
+    width: 100%;
+  }
+}
+
+/*# sourceMappingURL=Diagrams.css.map */

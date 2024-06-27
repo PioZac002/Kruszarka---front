@@ -15,18 +15,12 @@ const Dashboard = () => {
 
   return (
     <div className='container'>
-      <Sidebar />
+      {(isManager || isService) && <Sidebar />}
       <div className='mainContent'>
-        <Top />
+        {/* {(isManager || isService) && <Top />} */}
         <div className='bottom flex'>
-          {(isManager || isService) && <Listing />}
-          <Activity />
-          {!isManager && !isService && (
-            <p>
-              Jesteś zwykłym pracownikiem. Nie masz uprawnień do zarządzania
-              kruszarkami ani pracownikami.
-            </p>
-          )}
+          <Listing />
+          {(isManager || isService) && <Activity />}
         </div>
       </div>
     </div>
